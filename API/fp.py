@@ -26,6 +26,8 @@ except ImportError:
 _fp_solr = solr.SolrConnectionPool("http://localhost:8502/solr/fp")
 _hexpoch = int(time.time() * 1000)
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.FileHandler('log/fp.log'))
 _tyrant_address = ['localhost', 1978]
 _tyrant = None
 
@@ -204,7 +206,7 @@ def best_match_for_query(code_string, elbow=10, local=False):
             continue
         actual_scores[track_id] = actual_matches(code_string, track_code, elbow = elbow)
     
-    #logger.debug("Actual score for %s is %d (code_len %d), original was %d" % (r["track_id"], actual_scores[r["track_id"]], code_len, top_match_score))
+    logger.debug("Actual score for %s is %d (code_len %d), original was %d" % (r["track_id"], actual_scores[r["track_id"]], code_len, top_match_score))
     # Sort the actual scores
     sorted_actual_scores = sorted(actual_scores.iteritems(), key=lambda (k,v): (v,k), reverse=True)
     
