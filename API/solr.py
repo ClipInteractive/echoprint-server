@@ -283,6 +283,7 @@ Enter a raw query, without processing the returned HTML contents.
     >>> print c.query_raw(q='id:[* TO *]', wt='python', rows='10')
 
 """
+import logging
 import sys
 import socket
 import httplib
@@ -301,6 +302,9 @@ from types import BooleanType, FloatType, IntType, ListType, LongType, StringTyp
 from contextlib import contextmanager
 import Queue
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.FileHandler('log/solr.log'))
 
 __version__ = "1.3.0"
 

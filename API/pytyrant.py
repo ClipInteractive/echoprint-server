@@ -23,10 +23,15 @@ for the raw Tyrant protocol::
     >>> del t['__test_key__']
 
 """
+import logging
 import math
 import socket
 import struct
 import UserDict
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.FileHandler('log/pytyrant.log'))
 
 __version__ = '1.1.17'
 
