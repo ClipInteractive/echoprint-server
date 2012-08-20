@@ -24,6 +24,8 @@ urls = (
     '/query', 'query',
     '/query?(.*)', 'query',
     '/ingest', 'ingest',
+    '/delete', 'delete',
+    '/delete?(.*)', 'delete',
 )
 
 
@@ -67,6 +69,27 @@ class query:
         return json.dumps({"ok":True, "query":stuff.fp_code, "message":response.message(), "match":response.match(), "score":response.score, \
                         "qtime":response.qtime, "track_id":response.TRID, "total_time":response.total_time})
 
+class query:
+    def POST(self):
+        return self.GET()
+
+    def GET(self):
+        stuff = web.input(fp_code="")
+        response = fp.best_match_for_query(stuff.fp_code)
+        return json.dumps({"ok":True, "query":stuff.fp_code, "message":response.message(), "match":response.match(), "score":response.score, \
+                        "qtime":response.qtime, "track_id":response.TRID, "total_time":response.total_time})
+
+class delete:
+    def POST(self):
+        return self.GET()
+
+    def GET(self):
+        params = web.input(track_id="")
+        # DEC strings come in as unicode so we have to force them to ASCII
+        track_id = params.track_id.encode("utf8")
+        response = fp.delete(track_id)
+        #print response        
+        return json.dumps({"ok":True, "delete":track_id, "deleteResponse":response})
 
 application = web.application(urls, globals())#.wsgifunc()
         
