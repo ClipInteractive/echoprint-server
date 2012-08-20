@@ -21,7 +21,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-logger.addHandler(logging.FileHandler('api.log'))
+logger.addHandler(logging.FileHandler('log/api.log'))
 
 # Very simple web facing API for FP dist
 
