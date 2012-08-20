@@ -8,6 +8,8 @@ Copyright (c) 2010 The Echo Nest Corporation. All rights reserved.
 """
 from __future__ import with_statement
 
+import sys
+import logging
 import web
 import fp
 import re
@@ -17,6 +19,9 @@ try:
 except ImportError:
     import simplejson as json
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.FileHandler('api.log'))
 
 # Very simple web facing API for FP dist
 
@@ -90,6 +95,13 @@ class delete:
         response = fp.delete(track_id)
         #print response        
         return json.dumps({"ok":True, "delete":track_id, "deleteResponse":response})
+
+class APILogger(object):
+    def write(self, data):
+        logger.info(data.strip())
+
+sys.stdout = APILogger()
+sys.stderr = APILogger()
 
 application = web.application(urls, globals())#.wsgifunc()
         
