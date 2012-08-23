@@ -111,7 +111,8 @@ class delete:
 
 class APILogger(object):
     def write(self, data):
-        logger.info(data.strip())
+        pass
+        #logger.info(data.strip())
 
 sys.stdout = APILogger()
 sys.stderr = APILogger()
