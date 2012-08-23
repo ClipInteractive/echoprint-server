@@ -31,7 +31,7 @@ import UserDict
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-logger.addHandler(logging.FileHandler('log/pytyrant.log'))
+#logger.addHandler(logging.FileHandler('log/pytyrant.log'))
 
 __version__ = '1.1.17'
 

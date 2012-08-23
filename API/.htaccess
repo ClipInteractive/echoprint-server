@@ -1,0 +1,8 @@
+ <IfModule mod_rewrite.c>
+        RewriteEngine on
+        RewriteBase /
+        RewriteCond %{REQUEST_URI} !^/icons
+        RewriteCond %{REQUEST_URI} !^/favicon.ico$
+        RewriteCond %{REQUEST_URI} !^(/.*)+api.py/
+	RewriteRule ^(.*)$ api.py/$1 [PT,QSA]
+</IfModule>

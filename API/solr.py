@@ -304,7 +304,7 @@ import Queue
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-logger.addHandler(logging.FileHandler('log/solr.log'))
+#logger.addHandler(logging.FileHandler('log/solr.log'))
 
 __version__ = "1.3.0"
 

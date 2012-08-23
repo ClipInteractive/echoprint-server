@@ -27,7 +27,7 @@ _fp_solr = solr.SolrConnectionPool("http://localhost:8502/solr/fp")
 _hexpoch = int(time.time() * 1000)
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-logger.addHandler(logging.FileHandler('log/fp.log'))
+#logger.addHandler(logging.FileHandler('log/fp.log'))
 _tyrant_address = ['localhost', 1978]
 _tyrant = None
 

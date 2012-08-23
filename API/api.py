@@ -8,8 +8,14 @@ Copyright (c) 2010 The Echo Nest Corporation. All rights reserved.
 """
 from __future__ import with_statement
 
+import os
 import sys
 import logging
+
+abspath = os.path.dirname(__file__)
+sys.path.append(abspath)
+os.chdir(abspath)
+
 import web
 import fp
 import re
@@ -21,7 +27,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-logger.addHandler(logging.FileHandler('log/api.log'))
+#logger.addHandler(logging.FileHandler('log/api.log'))
 
 # Very simple web facing API for FP dist
 
@@ -60,7 +66,9 @@ class ingest:
         if params.release: data["release"] = params.release
         if params.track: data["track"] = params.track
         fp.ingest(data, do_commit=True, local=False)
-
+	
+	
+	web.header('Content-Type', 'text/plain')
         return json.dumps({"track_id":track_id, "status":"ok"})
         
     
@@ -71,6 +79,8 @@ class query:
     def GET(self):
         stuff = web.input(fp_code="")
         response = fp.best_match_for_query(stuff.fp_code)
+
+	web.header('Content-Type', 'text/plain')
         return json.dumps({"ok":True, "query":stuff.fp_code, "message":response.message(), "match":response.match(), "score":response.score, \
                         "qtime":response.qtime, "track_id":response.TRID, "total_time":response.total_time})
 
@@ -81,6 +91,8 @@ class query:
     def GET(self):
         stuff = web.input(fp_code="")
         response = fp.best_match_for_query(stuff.fp_code)
+
+	web.header('Content-Type', 'text/plain')
         return json.dumps({"ok":True, "query":stuff.fp_code, "message":response.message(), "match":response.match(), "score":response.score, \
                         "qtime":response.qtime, "track_id":response.TRID, "total_time":response.total_time})
 
@@ -93,7 +105,8 @@ class delete:
         # DEC strings come in as unicode so we have to force them to ASCII
         track_id = params.track_id.encode("utf8")
         response = fp.delete(track_id)
-        #print response        
+
+	web.header('Content-Type', 'text/plain')
         return json.dumps({"ok":True, "delete":track_id, "deleteResponse":response})
 
 class APILogger(object):
@@ -103,7 +116,7 @@ class APILogger(object):
 sys.stdout = APILogger()
 sys.stderr = APILogger()
 
-application = web.application(urls, globals())#.wsgifunc()
+application = web.application(urls, globals()).wsgifunc()
         
 if __name__ == "__main__":
     application.run()
