@@ -25,7 +25,8 @@ FILENAME_TEMPLATE="echoprint-replication-out-%s-%d.csv"
 
 def dump(start=0):
     try:
-        lastdump = tyrant["lastdump"]
+#        lastdump = tyrant["lastdump"]
+	 lastdump = "*"
     except KeyError:
         lastdump = "*"
 
