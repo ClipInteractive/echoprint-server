@@ -452,7 +452,7 @@ def delete(track_ids, do_commit=True, local=False):
 
     with solr.pooled_connection(_fp_solr) as host:
         for t in track_ids:
-            host.delete_query("track_id:%s*" % t)
+            host.delete_query("track_id:%s-*" % t)
     
     try:
         get_tyrant().multi_del(track_ids)
